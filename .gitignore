@@ -1,0 +1,30 @@
+# Various IDEs and Editors
+.vscode/
+.idea/
+**/*~
+
+# Mac OSX temporary files
+.DS_Store
+**/.DS_Store
+
+# Logs
+*.log
+yarn-error.log
+
+# dfx temporary files
+.dfx/
+.azle
+
+# frontend code
+node_modules/
+dist/
+.env
+
+src/**/*.did
+
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions

@@ -1,0 +1,26 @@
+{
+  "canisters": {
+    "internet-identity": {
+      "frontend": {},
+      "type": "pull",
+      "id": "rdmx6-jaaaa-aaaaa-aaadq-cai"
+    },
+    "wedding": {
+      "type": "custom",
+      "main": "src/wedding/wedding.ts",
+      "build": "npx azle wedding",
+      "candid": "src/wedding/wedding.did",
+      "wasm": ".azle/wedding/wedding.wasm",
+      "gzip": true,
+      "post_install": ["dfx generate"]
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 2
+}
