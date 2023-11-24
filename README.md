@@ -1,4 +1,4 @@
-# Ship Ship
+# ICP Staking Example
 
 This is an example project, intended to demonstrate how an app developer might integrate with an [Internet Identity](https://identity.ic0.app).
 

@@ -58,9 +58,7 @@ const useStore_ = (options = defaultOptions) => {
     }
   };
 
-  const updateClient = async (client: AuthClient) => {
-    setAuthClient(client);
-
+  const updateClient = async (client = authClient!) => {
     const isAuthenticated_ = await client.isAuthenticated();
     setIsAuthenticated(isAuthenticated_);
 
@@ -87,6 +85,7 @@ const useStore_ = (options = defaultOptions) => {
   const initAuthClient = async () => {
     try {
       const authClient_ = await AuthClient.create(options.createOptions);
+      setAuthClient(authClient_);
       updateClient(authClient_);
     } catch (error) {
       console.error(error);
@@ -108,14 +107,17 @@ const useStore_ = (options = defaultOptions) => {
     await authClient!.login({
       ...options.loginOptions,
       onSuccess: () => {
-        updateClient(authClient!);
+        updateClient();
+      },
+      onError: (errorMessage) => {
+        toast.error(`Error while trying to login: ${errorMessage}`);
       },
     });
   };
 
   const logout = async () => {
     await authClient!.logout();
-    await updateClient(authClient!);
+    await initAuthClient();
   };
 
   return {

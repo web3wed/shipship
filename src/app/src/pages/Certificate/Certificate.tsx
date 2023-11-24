@@ -18,7 +18,7 @@ const CertificateCover = styled(BlockContentContainer)({
   borderRadius: 35,
   width: '100%',
   height: 752,
-  background: `url(${certificateCover}), lightgray 50% / cover`,
+  background: `url(${certificateCover})`,
   backgroundSize: 'contain',
   padding: '35px 30px 37px 30px',
   backgroundRepeat: 'no-repeat',

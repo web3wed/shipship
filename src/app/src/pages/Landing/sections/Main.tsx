@@ -45,8 +45,7 @@ export const Main = () => {
     <MainContainer>
       <ContentContainer>
         <Typography align="center" variant="h2" color="white">
-          The very first service that helps the <br /> Universe 🌏 <br />
-          to connect your souls 💫⌛️
+          The very first service that helps the <br /> Universe connect souls 💫
         </Typography>
         <div css={{ ...flexHelper({ alignItems: 'center' }), gap: 16, marginTop: 36 }}>
           <Button size="lg" variant="primary" text="MATCH 💓" />

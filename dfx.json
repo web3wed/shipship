@@ -1,9 +1,9 @@
 {
   "canisters": {
     "internet-identity": {
-      "frontend": {},
       "type": "pull",
-      "id": "rdmx6-jaaaa-aaaaa-aaadq-cai"
+      "id": "rdmx6-jaaaa-aaaaa-aaadq-cai",
+      "frontend": {}
     },
     "wedding": {
       "type": "custom",
@@ -13,6 +13,12 @@
       "wasm": ".azle/wedding/wedding.wasm",
       "gzip": true,
       "post_install": ["dfx generate"]
+    },
+    "app": {
+      "type": "assets",
+      "build": "yarn build",
+      "source": ["src/app/dist"],
+      "frontend": {}
     }
   },
   "defaults": {

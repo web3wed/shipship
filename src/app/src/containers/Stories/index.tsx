@@ -24,7 +24,7 @@ export const stories = [
     img: story2,
   },
   {
-    text: 'Rewiew',
+    text: 'Review',
     img: story3,
   },
 ];

@@ -84,7 +84,7 @@ export const Form = () => {
           variant="secondary"
           text="Get Connected"
           sx={buttonStyles}
-          disabled={isGetConnectedButtonDisabled}
+          disabled={isGetConnectedButtonDisabled || myName.length === 0 || partnerPrincipleText.length === 0}
         />
       </form>
     </CeremonyContainer>
