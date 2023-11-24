@@ -1,11 +1,49 @@
-# ICP Staking Example
+# Ship Ship
 
-This is an example project, intended to demonstrate how an app developer might integrate with an [Internet Identity](https://identity.ic0.app).
+## Description of Project
+
+Ship Ship - matching and wedding ICP project.
+
+We have 2 canisters realized:
+
+1. wedding canister - this is an analog of the backend. This canister stores all weddings and information about each wedding. The following info: names, principals (this is Internet ID for DApp), wedding date, wedding id, current wedding status (just paired/married) There are two operations on this canister - match into a couple and agree to marry.
+
+2. website assets canister - this is everything that is responsible for the visual part (html/css), stores images.
+
+## Wedding canister
+
+Wedding canister is responsible for managing partner matching and marrying.
+
+Candid (IDL) interface for canister:
+
+```
+service: () -> {
+    agreeToMarry: () -> ();
+    getPartnerInfo: (principal) -> (opt record {id:principal; name:opt text; wedding:text; isAgreed:bool}) query;
+    getWeddingInfoOf: (principal) -> (opt record {id:text; hadAt:nat; partner1:record {id:principal; name:opt text; wedding:text; isAgreed:bool}; partner2:record {id:principal; name:opt text; wedding:text; isAgreed:bool}}) query;
+    matchPartner: (text, principal) -> ();
+}
+```
+
+Canister methods description:
+
+- `matchPartner` - this method is used to match with another partner and supply your name.
+- `agreeToMarry` - agree to marry with another partner (after another partner agreed partners are considered to be married)
+
+- `getPartnerInfo` - method returns information about specific partner like id, name, marry agree flag and wedding id
+- `getWeddingInfoOf` - method returns wedding information about specific partner, if he/she is not going to marry is will be Null
+
+Frontend will call `matchPartner` at first and `agreeToMarry` after.
+
+## Frontend assets canister
+
+Frontend is written in React.js and TypeScript, build system is Vite. Source code is in `src/app`.
+
+To start an app fill the `.env` file based on `.env.example` and run `yarn start`.
+
+Mainnet deployed NFT minter: https://mdh7i-waaaa-aaaag-qct4a-cai.icp0.io/
 
 ## Setting up for local development
-
-npx azle staking
-cd .azle/staking && /Users/nezort11/.config/azle/rust/1.68.2/bin/cargo build --target wasm32-wasi --manifest-path canister/Cargo.toml --release
 
 To get started, start a local dfx development environment in this directory with the following steps:
 
@@ -46,10 +84,13 @@ dfx deps deploy
 
 dfx deploy # internally calls `npm run build` and `npm run prebuild` for app canister
 
+```
 
+Useful commands:
 
+```sh
 # clean code and state + test works
-dfx canister delete wedding && dfx deploy
+dfx canister delete wedding && dfx deploy # --mode=reinstall
 
 yarn start # develop frontend
 yarn build # test frontend works
@@ -132,20 +173,6 @@ Once deployed, start the development server with `npm start`.
 
 You can now access the app at `http://127.0.0.1:5173/`.
 
-## Frontend
-
-Add to dfx.json
-
-```
-    "app": {
-      "dependencies": ["internet-identity", "wedding"], // only in development
-      "type": "assets",
-      "build": "yarn build",
-      "source": ["src/app/dist"],
-      "frontend": {}
-    }
-```
-
 ## Pulling Internet Identity into your own project
 
 To pull Internet Identity into your own project, you'll need to do the following:
@@ -165,34 +192,4 @@ To pull Internet Identity into your own project, you'll need to do the following
 dfx deps pull
 dfx deps init --argument '(null)' internet-identity
 dfx deps deploy
-```
-
-```
-    "token": {
-      "type": "motoko",
-      "main": "src/token/token.mo"
-    },
-    "staking": {
-      "dependencies": ["token"],
-      "type": "custom",
-      "main": "src/staking/index.ts",
-      "candid": "src/staking/index.did",
-      "build": "npx azle staking",
-      "wasm": ".azle/staking/staking.wasm",
-      "gzip": true,
-      "env": ["TOKEN_CANISTER_ID"]
-    },
-    "whoami": {
-      "main": "src/whoami/main.mo",
-      "type": "motoko",
-      "declarations": {
-        "node_compatibility": true
-      },
-      "pullable": {
-        "dependencies": [],
-        "wasm_url": "https://github.com/krpeacock/auth-client-demo/releases/latest/download/whoami.wasm",
-        "wasm_hash": "a5af74d01aec228c5a717dfb43f773917e1a9138e512431aafcd225ad0001a8b",
-        "init_guide": "null"
-      }
-    },
 ```

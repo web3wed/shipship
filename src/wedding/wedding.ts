@@ -127,12 +127,6 @@ export default Canister({
       { ...wedding, partner1, partner2 }, // as any
     );
   }),
-
-  test: update([], Void, () => {
-    weddings = StableBTreeMap(text, Wedding, 7)!;
-
-    partners = StableBTreeMap(Principal, Partner, 8)!;
-  }),
 });
 
 globalThis.crypto = {
